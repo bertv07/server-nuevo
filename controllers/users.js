@@ -6,7 +6,7 @@ const { error, Console } = require('console');
 
 router.get('/view', (request, response) => {
     const info = {
-        id: 2,
+        id: 1,
         nombre: "Nuevo sitio"
     }
     response.render('index', info)
@@ -62,15 +62,14 @@ router.put('/', (request, response) => {
 })
 
 router.delete('/:id', (request, response) => {
-    const user = request.body;
-    console.log(user)
-    User.deleteUser(user, (error, result) => {
+    User.DeleteUser(request.params.id, (error, result) => {
         if (error) {
-            console.log(error);
+            console.log("error en la consulta");
             response.status(500).send('Error en la consulta');
             return;
         }
-        response.send({ mensaje: "Usuario eliminado"})
+        response.send({mensaje: "El usuario ha sido eliminado "})
     })
 })
+    
 module.exports = router

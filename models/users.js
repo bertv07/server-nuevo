@@ -23,7 +23,11 @@ const User = {
         });
     }, 
     createUser: function(user, callback ){
-        const consulta = `INSERT INTO user (nombre, apellido, correo) VALUES ('${user.nombre}', '${user.apellido}', '${user.correo}')`;//CREAR
+        const consulta = `INSERT INTO user 
+        (nombre, apellido, correo) VALUES 
+        ('${user.nombre}',
+         '${user.apellido}',
+          '${user.correo}')`;//CREAR
         return db.query(consulta, callback)
     },
     deleteUser: function(id, callback ){
@@ -31,11 +35,19 @@ const User = {
         return db.query(consulta,callback)
     },
     updateUser: function(id, user, callback){
-        const consulta = `UPDATE user SET nombre = '${user.nombre}', apellido = '${user.apellido}', correo = '${user.correo}' WHERE id = ${id}`;//ACTUALIZAR
+        const consulta = `UPDATE user SET 
+        nombre = '${user.nombre}', 
+        apellido = '${user.apellido}', 
+        correo = '${user.correo}' 
+        WHERE id = ${id}`;//ACTUALIZAR
         return db.query(consulta, callback)
     },
     registerUser: function(nombre, hash, callback ){
-        const consulta = `INSERT INTO user (nombre, apellido, correo) VALUES ('${nombre}', '${hash}', 'awda@wd.com')`;//CREAR
+        const consulta = `INSERT INTO user 
+        (nombre, apellido, correo) VALUES 
+        ('${user.nombre}', 
+        '${user.apellido}', 
+        '${user.correo}')`;//CREAR
         return db.query(consulta, callback)
     },
 }

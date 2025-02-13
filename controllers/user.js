@@ -6,7 +6,7 @@ const { error, Console } = require('console');
 const bcrypt = require('bcryptjs')
 router.get('/view', (request, response) => {
     const info = {
-        id: 2,
+        id: 1,
         nombre: "Nuevo sitio"
     }
     response.render('index', info)

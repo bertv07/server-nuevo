@@ -1,7 +1,11 @@
 function getData(){
+    document.getElementById('data').innerHTML = "";
+
     fetch('http://localhost:3000/user')
     .then(response => response.json())
     .then(data => {
+        console.log(data);
+        document.getElementById('data').innerHTML = "";
         data.user.forEach(user => {
             document.getElementById('data').innerHTML +=`
                 <div class="user-card" id="user-card-${user.id}">
@@ -28,7 +32,7 @@ function getData(){
 getData();
 
 const btn = document.getElementById('boton')
-
+const btn2 = document.getElementById('boton2')
 function deleteItem(id) {
     fetch(`http://localhost:3000/user/${id}`,{
         method: "DELETE",
@@ -56,68 +60,67 @@ function editData(id){
     correo.value =  user.getElementsByClassName('correo')[0].innerText
 
 
-    btn.addEventListener('click', (e) => {
+    btn2.addEventListener('click', (e) => {
         e.preventDefault()
         saveData(id)
     })
 }
 
-function saveData( id = " "){
+
+function saveData(id) {
     var nombre = document.getElementById('nombre') 
     var apellido = document.getElementById('apellido')
     var correo = document.getElementById('correo')
-    
 
-    if(id==""){
-        fetch('http://localhost:3000/user',{
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                nombre: nombre.Value,   
-                apellido: apellido.Value,   
-                correo: correo.Value
-            })
-        }).then(response => {
-            if (response.ok) {
-                alert("El usuario se ha guardado")
-                getData();
-                nombre.value = "";
-                apellido.value = "";
-                correo.value = "";
-        
-        
-            }
+        fetch('http://localhost:3000/user', {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id,
+            nombre: nombre.value,   
+            apellido: apellido.value,   
+            correo: correo.value
         })
-    } else {
-        fetch('http://localhost:3000/user',{
-            method: method,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                id:id,
-                nombre: nombre.Value,   
-                apellido: apellido.Value,   
-                correo: correo.Value
-            })
-        }).then(response => {
-            if (response.ok) {
-                alert("El usuario se ha guardado")
-                getData();
-                nombre.value = "";
-                apellido.value = "";
-                correo.value = "";
-        
-        
-            }
+    }).then(response => {
+        if (response.ok) {
+            alert('El usuario se ha actualizado')
+            getData();
+            nombre.value = "";
+            apellido.value = "";
+            correo.value = "";
+        }
+    })
+}
+
+function createData() {
+    var nombre = document.getElementById('nombre') 
+    var apellido = document.getElementById('apellido')
+    var correo = document.getElementById('correo')
+
+        fetch('http://localhost:3000/user', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            nombre: nombre.value,   
+            apellido: apellido.value,   
+            correo: correo.value
         })
-    }
-    }
+    }).then(response => {
+        if (response.ok) {
+            alert('El usuario se ha guardado')
+            getData();
+            nombre.value = "";
+            apellido.value = "";
+            correo.value = "";
+        }
+    })
+} 
 
 btn.addEventListener('click', (e) => {
-    console.log("guardando")
     e.preventDefault()
-    saveData("POST")
+    createData()
 })
